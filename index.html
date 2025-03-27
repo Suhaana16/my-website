@@ -1,38 +1,114 @@
-<div class="container">
-    <h2>Confirm Booking?</h2>
-    <input type="email" id="userEmail" placeholder="Enter your email" required>
-    <button class="btn yes" onclick="confirmBooking()">Yes</button>
-    <button class="btn no" onclick="cancelBooking()">No</button>
-    <p id="message"></p>
-</div>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Confirm Booking</title>
+    <style>
+        /* General Styles */
+        body {
+            font-family: 'Poppins', sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            background: linear-gradient(to right, #31572c, #4f772d, #90a955);
+            margin: 0;
+        }
+        .container {
+            text-align: center;
+            background: white;
+            padding: 30px;
+            border-radius: 12px;
+            box-shadow: 0px 10px 25px rgba(0, 0, 0, 0.2);
+            width: 320px;
+        }
+        h2 {
+            color: #31572c;
+        }
+        input {
+            width: 90%;
+            padding: 10px;
+            margin: 10px 0;
+            border: 1px solid #90a955;
+            border-radius: 5px;
+            outline: none;
+            font-size: 16px;
+        }
+        .btn {
+            width: 100%;
+            padding: 12px;
+            border: none;
+            cursor: pointer;
+            border-radius: 5px;
+            font-size: 16px;
+            font-weight: bold;
+            transition: 0.3s;
+        }
+        .yes {
+            background-color: #4CAF50;
+            color: white;
+            margin-top: 10px;
+        }
+        .yes:hover {
+            background-color: #388E3C;
+            transform: scale(1.05);
+        }
+        .no {
+            background-color: #f44336;
+            color: white;
+            margin-top: 10px;
+        }
+        .no:hover {
+            background-color: #d32f2f;
+            transform: scale(1.05);
+        }
+        #message {
+            margin-top: 15px;
+            font-size: 16px;
+            font-weight: bold;
+            color: #4f772d;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h2>Confirm Booking?</h2>
+        <input type="email" id="userEmail" placeholder="Enter your email" required>
+        <button class="btn yes" onclick="confirmBooking()">✔ Confirm</button>
+        <button class="btn no" onclick="cancelBooking()">✖ Cancel</button>
+        <p id="message"></p>
+    </div>
 
-<script>
-    function confirmBooking() {
-        let email = document.getElementById("userEmail").value;
-        
-        if (!email) {
-            document.getElementById("message").textContent = "Please enter an email.";
-            return;
+    <script>
+        function confirmBooking() {
+            let email = document.getElementById("userEmail").value;
+            
+            if (!email) {
+                document.getElementById("message").textContent = "⚠ Please enter an email.";
+                return;
+            }
+
+            fetch("http://127.0.0.1:5000/send_email", {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json"
+                },
+                body: JSON.stringify({ email: email })
+            })
+            .then(response => response.json())
+            .then(data => {
+                document.getElementById("message").textContent = "✅ " + data.message;
+            })
+            .catch(error => {
+                console.error("Error:", error);
+                document.getElementById("message").textContent = "❌ Error sending email.";
+            });
         }
 
-        fetch("http://127.0.0.1:5000/send_email", {
-            method: "POST",
-            headers: {
-                "Content-Type": "application/json"
-            },
-            body: JSON.stringify({ email: email })
-        })
-        .then(response => response.json())
-        .then(data => {
-            document.getElementById("message").textContent = data.message;
-        })
-        .catch(error => {
-            console.error("Error:", error);
-            document.getElementById("message").textContent = "Error sending email.";
-        });
-    }
-
-    function cancelBooking() {
-        document.getElementById("message").textContent = "";
-    }
-</script>
+        function cancelBooking() {
+            document.getElementById("message").textContent = "";
+        }
+    </script>
+</body>
+</html>
