@@ -8,33 +8,33 @@
         /* Import Google Font */
         @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap');
 
-        /* Body Styling */
+        /* General Styles */
         body {
             font-family: 'Poppins', sans-serif;
             display: flex;
             justify-content: center;
             align-items: center;
             height: 100vh;
-            background: url('https://source.unsplash.com/1600x900/?travel,airplane') no-repeat center center/cover;
+            background: linear-gradient(to right, #31572c, #4f772d, #90a955);
             margin: 0;
         }
 
-        /* Glassmorphism Effect Container */
         .container {
-            background: rgba(255, 255, 255, 0.1);
-            backdrop-filter: blur(15px);
+            background: rgba(255, 255, 255, 0.15);
+            backdrop-filter: blur(10px);
             padding: 30px;
             border-radius: 12px;
             box-shadow: 0px 10px 25px rgba(0, 0, 0, 0.2);
             width: 350px;
             text-align: center;
             color: white;
-            border: 1px solid rgba(255, 255, 255, 0.2);
+            border: 1px solid rgba(255, 255, 255, 0.3);
         }
 
         h2 {
-            font-size: 24px;
+            font-size: 22px;
             margin-bottom: 15px;
+            font-weight: 600;
         }
 
         input {
@@ -54,7 +54,7 @@
             color: rgba(255, 255, 255, 0.7);
         }
 
-        /* Buttons Styling */
+        /* Button Styling */
         .btn {
             width: 100%;
             padding: 12px;
@@ -63,7 +63,7 @@
             border-radius: 8px;
             font-size: 16px;
             font-weight: bold;
-            transition: all 0.3s ease-in-out;
+            transition: 0.3s ease-in-out;
             margin-top: 10px;
         }
 
@@ -93,6 +93,7 @@
             font-size: 16px;
             font-weight: bold;
             color: white;
+            transition: 0.3s;
         }
     </style>
 </head>
@@ -107,10 +108,12 @@
 
     <script>
         function confirmBooking() {
-            let email = document.getElementById("userEmail").value;
+            let email = document.getElementById("userEmail").value.trim();
+            let messageBox = document.getElementById("message");
             
             if (!email) {
-                document.getElementById("message").textContent = "⚠ Please enter an email.";
+                messageBox.textContent = "⚠ Please enter an email.";
+                messageBox.style.color = "#ffc107"; // Warning color
                 return;
             }
 
@@ -123,16 +126,20 @@
             })
             .then(response => response.json())
             .then(data => {
-                document.getElementById("message").textContent = "✅ " + data.message;
+                messageBox.textContent = "✅ " + data.message;
+                messageBox.style.color = "#28a745"; // Success color
             })
             .catch(error => {
                 console.error("Error:", error);
-                document.getElementById("message").textContent = "❌ Error sending email.";
+                messageBox.textContent = "❌ Error sending email.";
+                messageBox.style.color = "#dc3545"; // Error color
             });
         }
 
         function cancelBooking() {
-            document.getElementById("message").textContent = "";
+            let messageBox = document.getElementById("message");
+            messageBox.textContent = "❌ Booking Canceled.";
+            messageBox.style.color = "#dc3545"; // Error color
         }
     </script>
 </body>
