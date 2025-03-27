@@ -5,75 +5,100 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Confirm Booking</title>
     <style>
-        /* General Styles */
+        /* Import Google Font */
+        @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap');
+
+        /* Body Styling */
         body {
             font-family: 'Poppins', sans-serif;
             display: flex;
             justify-content: center;
             align-items: center;
             height: 100vh;
-            background: linear-gradient(to right, #31572c, #4f772d, #90a955);
+            background: url('https://source.unsplash.com/1600x900/?travel,airplane') no-repeat center center/cover;
             margin: 0;
         }
+
+        /* Glassmorphism Effect Container */
         .container {
-            text-align: center;
-            background: white;
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(15px);
             padding: 30px;
             border-radius: 12px;
             box-shadow: 0px 10px 25px rgba(0, 0, 0, 0.2);
-            width: 320px;
+            width: 350px;
+            text-align: center;
+            color: white;
+            border: 1px solid rgba(255, 255, 255, 0.2);
         }
+
         h2 {
-            color: #31572c;
+            font-size: 24px;
+            margin-bottom: 15px;
         }
+
         input {
             width: 90%;
-            padding: 10px;
+            padding: 12px;
             margin: 10px 0;
-            border: 1px solid #90a955;
-            border-radius: 5px;
+            border: none;
+            border-radius: 8px;
             outline: none;
             font-size: 16px;
+            background: rgba(255, 255, 255, 0.2);
+            color: white;
+            text-align: center;
         }
+
+        input::placeholder {
+            color: rgba(255, 255, 255, 0.7);
+        }
+
+        /* Buttons Styling */
         .btn {
             width: 100%;
             padding: 12px;
             border: none;
             cursor: pointer;
-            border-radius: 5px;
+            border-radius: 8px;
             font-size: 16px;
             font-weight: bold;
-            transition: 0.3s;
+            transition: all 0.3s ease-in-out;
+            margin-top: 10px;
         }
+
         .yes {
-            background-color: #4CAF50;
+            background: linear-gradient(135deg, #28a745, #218838);
             color: white;
-            margin-top: 10px;
         }
+
         .yes:hover {
-            background-color: #388E3C;
             transform: scale(1.05);
+            box-shadow: 0px 5px 15px rgba(40, 167, 69, 0.3);
         }
+
         .no {
-            background-color: #f44336;
+            background: linear-gradient(135deg, #dc3545, #c82333);
             color: white;
-            margin-top: 10px;
         }
+
         .no:hover {
-            background-color: #d32f2f;
             transform: scale(1.05);
+            box-shadow: 0px 5px 15px rgba(220, 53, 69, 0.3);
         }
+
+        /* Message Styling */
         #message {
             margin-top: 15px;
             font-size: 16px;
             font-weight: bold;
-            color: #4f772d;
+            color: white;
         }
     </style>
 </head>
 <body>
     <div class="container">
-        <h2>Confirm Booking?</h2>
+        <h2>Confirm Your Booking</h2>
         <input type="email" id="userEmail" placeholder="Enter your email" required>
         <button class="btn yes" onclick="confirmBooking()">✔ Confirm</button>
         <button class="btn no" onclick="cancelBooking()">✖ Cancel</button>
